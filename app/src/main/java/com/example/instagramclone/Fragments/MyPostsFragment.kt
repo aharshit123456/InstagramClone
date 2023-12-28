@@ -39,6 +39,7 @@ class MyPostsFragment : Fragment() {
                 tempList.add(post)
             }
             postList.addAll(tempList)
+            adapter. notifyDataSetChanged()
         }
         return binding.root
     }

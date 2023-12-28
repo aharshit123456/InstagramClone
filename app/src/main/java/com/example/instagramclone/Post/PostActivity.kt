@@ -1,8 +1,10 @@
 package com.example.instagramclone.Post
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.instagramclone.HomeActivity
 import com.example.instagramclone.Models.Post
 import com.example.instagramclone.R
 import com.example.instagramclone.Utils.POST
@@ -39,7 +41,10 @@ class PostActivity : AppCompatActivity() {
         setSupportActionBar(binding.materialToolbar)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
-        binding.materialToolbar.setNavigationOnClickListener { finish() }
+        binding.materialToolbar.setNavigationOnClickListener {
+            startActivity(Intent(this@PostActivity, HomeActivity::class.java))
+            finish()
+        }
 
         binding.selectImg.setOnClickListener {
             launcher.launch("image/*")
@@ -51,10 +56,15 @@ class PostActivity : AppCompatActivity() {
             Firebase.firestore.collection(POST).document().set(post).addOnSuccessListener {
                 Firebase.firestore.collection(Firebase.auth.currentUser!!.uid).document().set(post)
                     .addOnSuccessListener {
+                        startActivity(Intent(this@PostActivity, HomeActivity::class.java))
                         finish()
                     }
             }
+        }
 
+        binding.cancelButton.setOnClickListener{
+            startActivity(Intent(this@PostActivity, HomeActivity::class.java))
+            finish()
         }
 
     }
